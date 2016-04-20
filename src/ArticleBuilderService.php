@@ -14,15 +14,15 @@ class ArticleBuilderService
 	}
 
 	# Curl Post Request with Api URL & Parameter(s) Data Array
-	public function curlPost($url, $data, &$info) 
+	public function curlPost($data, &$info) 
 	{
 	    $ch = curl_init();
-	    curl_setopt($ch, CURLOPT_URL, $url);
+	    curl_setopt($ch, CURLOPT_URL, $this->url);
 	    curl_setopt($ch, CURLOPT_POST, true);
 	    curl_setopt($ch, CURLOPT_POSTFIELDS, $this->curlPostData($data));
 	    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	    curl_setopt($ch, CURLOPT_REFERER, $url);
+	    curl_setopt($ch, CURLOPT_REFERER, $this->url);
 	    $html = trim(curl_exec($ch));
 	    curl_close($ch);
 
@@ -145,7 +145,7 @@ class ArticleBuilderService
 			}
 
 			# Request Api for Building Article
-			$buildOutput = $this->curlPost($this->url, $inputArray, $info);
+			$buildOutput = $this->curlPost($inputArray, $info);
 			$buildOutput = json_decode($buildOutput, true);
 			$buildOutput['session'] = $session;
 
@@ -168,7 +168,7 @@ class ArticleBuilderService
 		$inputArray['format'] = isset($this->format) ? $this->format : 'json';
 		$inputArray['action'] = $this->action;
 
-		$authOutput = $this->curlPost($this->url, $inputArray, $info);
+		$authOutput = $this->curlPost($inputArray, $info);
 		$authOutput = json_decode($authOutput, true);
 
 		return $authOutput;
@@ -188,7 +188,7 @@ class ArticleBuilderService
 			$inputArray['format'] = $this->format;
 
 			# Use Count of Api Queries
-			$buildOutput = $this->curlPost($this->url, $inputArray, $info);
+			$buildOutput = $this->curlPost($inputArray, $info);
 			$buildOutput = json_decode($buildOutput, true);
 
 			# Build Output
@@ -201,7 +201,7 @@ class ArticleBuilderService
 			$inputArray['action'] = 'apiMaxQueries';
 
 			# Max Count of Api Queries
-			$buildOutput = $this->curlPost($this->url, $inputArray, $info);
+			$buildOutput = $this->curlPost($inputArray, $info);
 			$buildOutput = json_decode($buildOutput, true);
 
 			$output['apiMaxQueries'] = $buildOutput['output'];
@@ -225,7 +225,7 @@ class ArticleBuilderService
 			$inputArray['format'] = $this->format;
 
 			# Use Count of Api Tip Queries
-			$buildOutput = $this->curlPost($this->url, $inputArray, $info);
+			$buildOutput = $this->curlPost($inputArray, $info);
 			$buildOutput = json_decode($buildOutput, true);
 
 			# Build Output
@@ -239,7 +239,7 @@ class ArticleBuilderService
 			$inputArray['action'] = $this->action;
 
 			# Max Count of Api Tip Queries
-			$buildOutput = $this->curlPost($this->url, $inputArray, $info);
+			$buildOutput = $this->curlPost($inputArray, $info);
 			$buildOutput = json_decode($buildOutput, true);
 
 			$output['apiMaxTipQueries'] = $buildOutput['output'];
@@ -262,8 +262,8 @@ class ArticleBuilderService
 			$inputArray['session'] = $authOutput['session'];
 			$inputArray['format'] = $this->format;
 
-			# Use Count of Api Tip Queries
-			$buildOutput = $this->curlPost($this->url, $inputArray, $info);
+			# Building Output
+			$buildOutput = $this->curlPost($inputArray, $info);
 			$buildOutput = json_decode($buildOutput, true);	
 			$buildOutput['session'] = $inputArray['session'];
 
@@ -303,8 +303,123 @@ class ArticleBuilderService
 				$inputArray['password'] = $dataArray['password'];
 			}
 
-			# Use Count of Api Tip Queries
-			$buildOutput = $this->curlPost($this->url, $inputArray, $info);
+			# Building Output
+			$buildOutput = $this->curlPost($inputArray, $info);
+			$buildOutput = json_decode($buildOutput, true);	
+			$buildOutput['session'] = $inputArray['session'];
+
+			return $buildOutput;
+		}	
+	}
+
+	# Action : createBlogPostJob, deleteBlogPostJob & doAutoPostJob
+	public function blogPostJob($dataArray)
+	{
+		if ( $dataArray['action'] == 'createBlogPostJob' ) {
+
+			if ( empty($dataArray['category']) && !isset($dataArray['category']) )
+				return ['success' => false, 'error' => 'Category is required for Create Blog Post Job!'];
+			if ( empty($dataArray['blogcategory']) && !isset($dataArray['blogcategory']) )
+				return ['success' => false, 'error' => 'Blog Category is required for Create Blog Post Job!'];
+
+		} elseif ( $dataArray['action'] == 'deleteBlogPostJob' ) {
+
+			if ( empty($dataArray['id']) && !isset($dataArray['id']) )
+				return ['success' => false, 'error' => 'Blog Post Job ID is required for Delete!'];
+
+		} elseif ( $dataArray['action'] == 'doAutoPost' ) { 
+
+			if ( empty($dataArray['id']) && !isset($dataArray['id']) )
+				return ['success' => false, 'error' => 'Blog Post Job ID is required for running Do Auto Post!'];
+			
+		}
+
+		# Authenticate & get Session ID
+		$authOutput = $this->authenticate();
+		if ( $authOutput['success'] ) {
+
+			# Building Input Array.
+			$inputArray = [];
+			$this->action = $dataArray['action'];
+			$inputArray['action'] = $this->action;
+			$inputArray['session'] = $authOutput['session'];
+			$inputArray['format'] = $this->format;
+
+			if ( $this->action == 'createBlogPostJob' ) {
+				
+				$inputArray['category'] = $dataArray['category'];
+				$inputArray['blog'] = $dataArray['blog'];
+				$inputArray['blogcategory'] = $dataArray['blogcategory'];
+				$inputArray['wordcountmin'] = $dataArray['wordcountmin'] < 300 ? 300 : $dataArray['wordcountmin'];
+				$inputArray['wordcountmax'] = $dataArray['wordcountmax'] > 1000 ? 1000 : $dataArray['wordcountmax'];
+				$inputArray['blogcategory'] = $dataArray['blogcategory'];
+				$inputArray['frequency'] = $dataArray['frequency'] < 28800 ? 28800 : $dataArray['frequency'];
+				
+				if ( !empty($dataArray['genericresource']) && isset($dataArray['genericresource']) ) {
+
+					$inputArray['genericresource'] = $dataArray['genericresource'] ? $dataArray['genericresource'] : 0;
+					if ( !empty($dataArray['genericlinks']) && isset($dataArray['genericlinks']) && $input['genericresource'] == 1 ) {
+						$inputArray['genericlinks'] = $dataArray['genericlinks'] ? $dataArray['genericlinks'] : 0;
+					}
+				}
+
+				if ( !empty($dataArray['lsireplacement']) && isset($dataArray['lsireplacement']) )
+					$inputArray['lsireplacement'] = $dataArray['lsireplacement'] > 0 ? 1 : 0;
+
+				if ( !empty($dataArray['addheadings']) && isset($dataArray['addheadings']) )
+					$inputArray['addheadings'] = $dataArray['addheadings'] > 0 ? 1 : 0;
+
+				if ( !empty($dataArray['addimages']) && isset($dataArray['addimages']) )
+					$inputArray['addimages'] = $dataArray['addimages'] > 0 ? 1 : 0;
+
+				if ( !empty($dataArray['addyoutube']) && isset($dataArray['addyoutube']) )
+					$inputArray['addyoutube'] = $dataArray['addyoutube'] > 0 ? 1 : 0;
+
+				if ( !empty($dataArray['addinjection']) && isset($dataArray['addinjection']) )
+					$inputArray['addinjection'] = $dataArray['addinjection'] > 0 ? 1 : 0;
+
+				if ( !empty($dataArray['addclickbank']) && isset($dataArray['addclickbank']) ) {
+					$inputArray['addclickbank'] = $dataArray['addclickbank'] > 0 ? 1 : 0;
+					if ( !empty($dataArray['cbusername']) && isset($dataArray['cbusername']) && $inputArray['addclickbank'] == 1 )
+						$inputArray['cbusername'] = $dataArray['cbusername'];
+				}
+
+				if ( !empty($dataArray['addinjection']) && isset($dataArray['addinjection']) )
+					$inputArray['addinjection'] = $dataArray['addinjection'] > 0 ? 1 : 0;
+
+				if ( !empty($dataArray['customkeys']) && isset($dataArray['customkeys']) )
+					$inputArray['customkeys'] = $dataArray['customkeys'];
+
+				if ( !empty($dataArray['customkeyslist']) && isset($dataArray['customkeyslist']) )
+					$inputArray['customkeyslist'] = $dataArray['customkeyslist'];
+
+				if ( !empty($dataArray['injectstyle']) && isset($dataArray['injectstyle']) )
+					$inputArray['injectstyle'] = $dataArray['injectstyle'];
+
+				if ( !empty($dataArray['injectsidebar']) && isset($dataArray['injectsidebar']) )
+					$inputArray['injectsidebar'] = $dataArray['injectsidebar'];
+
+				if ( !empty($dataArray['injectqty']) && isset($dataArray['injectqty']) )
+					$inputArray['injectqty'] = $dataArray['injectqty'];
+
+				if ( !empty($dataArray['resource']) && isset($dataArray['resource']) )
+					$inputArray['resource'] = $dataArray['resource'];
+
+				if ( !empty($dataArray['comments']) && isset($dataArray['comments']) )
+					$inputArray['comments'] = $dataArray['comments'] > 0 ? 1 : 0;
+
+				if ( !empty($dataArray['pingbacks']) && isset($dataArray['pingbacks']) )
+					$inputArray['pingbacks'] = $dataArray['pingbacks'] > 0 ? 1 : 0;
+
+				if ( !empty($dataArray['draft']) && isset($dataArray['draft']) )
+					$inputArray['draft'] = $dataArray['draft'] > 0 ? 1 : 0;
+			
+			} elseif ( $this->action == 'deleteBlogPostJob' || $this->action = 'doAutoPost' ) {
+				$inputArray['id'] = $dataArray['id'];
+			}
+
+			# Building Output
+			$buildOutput = $this->curlPost($inputArray, $info);
 			$buildOutput = json_decode($buildOutput, true);	
 			$buildOutput['session'] = $inputArray['session'];
 
