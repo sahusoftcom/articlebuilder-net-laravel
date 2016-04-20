@@ -43,6 +43,10 @@ class ArticleBuilderService
 	# Action : Inject Article or Build Article
 	public function article($dataArray)
 	{
+		if ( $dataArray['action'] != 'superSpun' || $dataArray['action'] != 'buildArticle' || $dataArray['action'] != 'injectContent'  || $dataArray['action'] != 'getTip' ) {
+			return ['success' => false, 'error' => 'Action Not Found!'];
+		}
+
 		if ( !isset($dataArray['action']) || empty($dataArray['action']) )
 			return [
 					'success' 	=> false,
@@ -72,7 +76,7 @@ class ArticleBuilderService
 			$inputArray['format'] = $this->format;
 			$inputArray['category'] = $dataArray['category'];
 			
-			if( $this->action == 'superSun' ) {
+			if( $this->action == 'superSpun' ) {
 				
 				//
 
@@ -250,7 +254,7 @@ class ArticleBuilderService
 
 	# Action : categories
 	public function categories()
-	{
+	{	
 		# Authenticate & get Session ID
 		$authOutput = $this->authenticate();
 		if ( $authOutput['success'] ) {
@@ -283,6 +287,10 @@ class ArticleBuilderService
 			} elseif ( empty($dataArray['password']) || !isset($dataArray['password']) ) {
 				return ['success' => false, 'error' => 'Password is required to Add Blog'];
 			}
+		} elseif ( $dataArray['action'] == 'blogDelete' ) {
+			//
+		} else {
+			return ['success' => false, 'error' => 'Action Not Found!'];
 		}
 
 		# Authenticate & get Session ID
@@ -331,7 +339,9 @@ class ArticleBuilderService
 
 			if ( empty($dataArray['id']) && !isset($dataArray['id']) )
 				return ['success' => false, 'error' => 'Blog Post Job ID is required for running Do Auto Post!'];
-			
+
+		} else {
+			return ['success' => false, 'error' => 'Action Not Found!'];
 		}
 
 		# Authenticate & get Session ID
@@ -415,6 +425,105 @@ class ArticleBuilderService
 					$inputArray['draft'] = $dataArray['draft'] > 0 ? 1 : 0;
 			
 			} elseif ( $this->action == 'deleteBlogPostJob' || $this->action = 'doAutoPost' ) {
+				$inputArray['id'] = $dataArray['id'];
+			}
+
+			# Building Output
+			$buildOutput = $this->curlPost($inputArray, $info);
+			$buildOutput = json_decode($buildOutput, true);	
+			$buildOutput['session'] = $inputArray['session'];
+
+			return $buildOutput;
+		}	
+	}
+
+	# Action : createUniquePostJob, deleteUniquePostJob & doUniqueAutoPost
+	public function unqiuePostJob($dataArray)
+	{
+		if ( $dataArray['action'] == 'createUniquePostJob' ) {
+
+			if ( empty($dataArray['apikey']) && !isset($dataArray['apikey']) )
+				return ['success' => false, 'error' => 'API Key (iNeedArticles.com) is required for Create Unique Post Job!'];
+
+			if ( empty($dataArray['blog']) && !isset($dataArray['blog']) )
+				return ['success' => false, 'error' => 'Blog Description is required for Create Unique Post Job!'];
+
+			if ( empty($dataArray['keyword']) && !isset($dataArray['keyword']) )
+				return ['success' => false, 'error' => 'Keyword is required for Create Unique Post Job!'];
+
+		} elseif ( $dataArray['action'] == 'deleteUniquePostJob' ) {
+
+			if ( empty($dataArray['id']) && !isset($dataArray['id']) )
+				return ['success' => false, 'error' => 'Unique Post Job ID is required for Delete!'];
+
+		} elseif ( $dataArray['action'] == 'doUniqueAutoPost' ) { 
+
+			if ( empty($dataArray['id']) && !isset($dataArray['id']) )
+				return ['success' => false, 'error' => 'Unique Post Job ID is required for running Do Unique Auto Post!'];
+			
+		} else {
+			return ['success' => false, 'error' => 'Action Not Found!'];
+		}
+
+		# Authenticate & get Session ID
+		$authOutput = $this->authenticate();
+		if ( $authOutput['success'] ) {
+
+			# Building Input Array.
+			$inputArray = [];
+			$this->action = $dataArray['action'];
+			$inputArray['action'] = $this->action;
+			$inputArray['session'] = $authOutput['session'];
+			$inputArray['format'] = $this->format;
+
+			if ( $this->action == 'createUniquePostJob' ) {
+				
+				$inputArray['blog'] = $dataArray['blog'];
+				$inputArray['apikey'] = $dataArray['apikey'];
+				$inputArray['keywords'] = $dataArray['keywords'];
+
+				if ( isset($inputArray['exactkeys']) $$ !empty($inputArray['exactkeys']) )
+					$inputArray['exactkeys'] = $dataArray['exactkeys'] > 0 ? 1 : 0;
+
+				if ( isset($inputArray['bestwriters']) $$ !empty($inputArray['bestwriters']) )
+					$inputArray['bestwriters'] = $dataArray['bestwriters'] > 0 ? 1 : 0;
+
+				if ( isset($inputArray['extrasearch']) $$ !empty($inputArray['extrasearch']) )
+					$inputArray['extrasearch'] = $dataArray['extrasearch'] > 0 ? 1 : 0;
+
+				$inputArray['blogcategory'] = $dataArray['blogcategory'];
+				$inputArray['wordcountmin'] = $dataArray['wordcountmin'] < 300 ? 300 : $dataArray['wordcountmin'];
+				$inputArray['wordcountmax'] = $dataArray['wordcountmax'] > 1000 ? 1000 : $dataArray['wordcountmax'];
+				$inputArray['blogcategory'] = $dataArray['blogcategory'];
+				$inputArray['frequency'] = $dataArray['frequency'] < 28800 ? 28800 : $dataArray['frequency'];
+				
+				if ( !empty($dataArray['genericresource']) && isset($dataArray['genericresource']) ) {
+
+					$inputArray['genericresource'] = $dataArray['genericresource'] ? $dataArray['genericresource'] : 0;
+					if ( !empty($dataArray['genericlinks']) && isset($dataArray['genericlinks']) && $input['genericresource'] == 1 ) {
+						$inputArray['genericlinks'] = $dataArray['genericlinks'] ? $dataArray['genericlinks'] : 0;
+					}
+				}
+
+				if ( !empty($dataArray['addimages']) && isset($dataArray['addimages']) )
+					$inputArray['addimages'] = $dataArray['addimages'] > 0 ? 1 : 0;
+
+				if ( !empty($dataArray['addyoutube']) && isset($dataArray['addyoutube']) )
+					$inputArray['addyoutube'] = $dataArray['addyoutube'] > 0 ? 1 : 0;
+
+				if ( !empty($dataArray['resource']) && isset($dataArray['resource']) )
+					$inputArray['resource'] = $dataArray['resource'];
+
+				if ( !empty($dataArray['comments']) && isset($dataArray['comments']) )
+					$inputArray['comments'] = $dataArray['comments'] > 0 ? 1 : 0;
+
+				if ( !empty($dataArray['pingbacks']) && isset($dataArray['pingbacks']) )
+					$inputArray['pingbacks'] = $dataArray['pingbacks'] > 0 ? 1 : 0;
+
+				if ( !empty($dataArray['draft']) && isset($dataArray['draft']) )
+					$inputArray['draft'] = $dataArray['draft'] > 0 ? 1 : 0;
+			
+			} elseif ( $this->action == 'deleteUniquePostJob' || $this->action = 'doUniqueAutoPost' ) {
 				$inputArray['id'] = $dataArray['id'];
 			}
 
