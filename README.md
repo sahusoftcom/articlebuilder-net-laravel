@@ -1,2 +1,2 @@
 # Articlebuilder.Net Laravel
-#### Service Provider for ArticleBuilder.net API
+#### Service Provider for ArticleBuilder.net API(s)
