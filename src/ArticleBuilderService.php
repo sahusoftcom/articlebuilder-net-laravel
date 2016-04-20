@@ -30,7 +30,7 @@ class ArticleBuilderService
 	}
 
 	# Making Request Api Parameter
-	public function curlPostData($dataArray) 
+	public function curlPostData($dataArray)
 	{
 	    $options = "";
 	    foreach ( $dataArray as $key => $value ) {
@@ -55,6 +55,7 @@ class ArticleBuilderService
 					'error' => 'Category is required'
 				];
 
+		# Authenticate & get Session ID
 		$authOutput = $this->authenticate();
 		if ( $authOutput['success'] ) {
 
@@ -160,7 +161,7 @@ class ArticleBuilderService
 		# Action to Login
 		$this->action = 'authenticate';
 
-		# Building Input Array..
+		# Building Input Array.
 		$inputArray = [];
 		$inputArray['username'] = $this->username;
 		$inputArray['password'] = $this->password;
@@ -171,6 +172,76 @@ class ArticleBuilderService
 		$authOutput = json_decode($authOutput, true);
 
 		return $authOutput;
+	}
+
+	public function apiQueries()
+	{
+		# Authenticate & get Session ID
+		$authOutput = $this->authenticate();
+		if ( $authOutput['success'] ) {
+
+			# Building Input Array.
+			$inputArray = [];
+			$inputArray['action'] = 'apiQueries';
+			$inputArray['session'] = $authOutput['session'];
+			$inputArray['format'] = $this->format;
+
+			# Use Count of Api Queries
+			$buildOutput = $this->curlPost($this->url, $inputArray, $info);
+			$buildOutput = json_decode($buildOutput, true);
+
+			# Build Output
+			$output = [];
+			$output['apiQueries'] = $buildOutput['output'];
+			$output['session'] = $authOutput['session'];
+			$output['success'] = true;
+
+			#build Input Array
+			$inputArray['action'] = 'apiMaxQueries';
+
+			# Max Count of Api Queries
+			$buildOutput = $this->curlPost($this->url, $inputArray, $info);
+			$buildOutput = json_decode($buildOutput, true);
+
+			$output['apiMaxQueries'] = $buildOutput['output'];
+
+			return $output;
+		}
+	}
+
+	public function apiTipQueries()
+	{
+		# Authenticate & get Session ID
+		$authOutput = $this->authenticate();
+		if ( $authOutput['success'] ) {
+
+			# Building Input Array.
+			$inputArray = [];
+			$inputArray['action'] = 'apiTipQueries';
+			$inputArray['session'] = $authOutput['session'];
+			$inputArray['format'] = $this->format;
+
+			# Use Count of Api Tip Queries
+			$buildOutput = $this->curlPost($this->url, $inputArray, $info);
+			$buildOutput = json_decode($buildOutput, true);
+
+			# Build Output
+			$output = [];
+			$output['apiTipQueries'] = $buildOutput['output'];
+			$output['session'] = $authOutput['session'];
+			$output['success'] = true;
+
+			#build Input Array
+			$inputArray['action'] = 'apiMaxTipQueries';
+
+			# Max Count of Api Tip Queries
+			$buildOutput = $this->curlPost($this->url, $inputArray, $info);
+			$buildOutput = json_decode($buildOutput, true);
+
+			$output['apiMaxTipQueries'] = $buildOutput['output'];
+
+			return $output;
+		}
 	}
 
 }
