@@ -40,7 +40,7 @@ class ArticleBuilderService
 	    return $options;
 	}
 
-	# Inject Article or Build Article
+	# Action : Inject Article or Build Article
 	public function article($dataArray)
 	{
 		if ( !isset($dataArray['action']) || empty($dataArray['action']) )
@@ -71,64 +71,76 @@ class ArticleBuilderService
 			$inputArray['format'] = $this->format;
 			$inputArray['category'] = $dataArray['category'];
 			
-			if ( isset($dataArray['supersun']) && !empty($dataArray['supersun']) )
-				$inputArray['supersun'] = $dataArray['supersun'] > 1 ? $dataArray['supersun'] : 1;
-
-			$inputArray['spin'] = !empty($dataArray['spin']) ? $dataArray['spin'] : 0;
-			$inputArray['phrasesonly'] = !empty($dataArray['phrasesonly']) ? $dataArray['phrasesonly'] : 0;
-			$inputArray['generatenow'] = !empty($dataArray['generatenow']) ? $dataArray['generatenow'] : 0;
-
-			if ( $this->action == 'buildArticle' ) {
-
-				if ( isset($dataArray['subtopics']) || !empty($dataArray['subtopics']) )
-					$inputArray['subtopics'] = $dataArray['subtopics'];
-
-				$inputArray['wordcount'] = !empty($dataArray['wordcount']) ? $dataArray['wordcount'] : 500;
-
-				if ( isset($data['lsireplacement']) && !empty($dataArray['lsireplacement']) )
-					$inputArray['lsireplacement'] = $dataArray['lsireplacement'] > 0 ? $dataArray['lsireplacement'] : 1;
-
-				if ( isset($data['spintogether']) && !empty($dataArray['spintogether']) ) {
-					$inputArray['spintogether'] = $dataArray['spintogether'] > 0 ? $dataArray['spintogether'] : 1;
-					$inputArray['count'] = !empty($dataArray['count']) ? $dataArray['count'] : 1;
-				}
-
-				if ( isset($data['customkeys']) && !empty($dataArray['customkeys']) )
-					$inputArray['customkeys'] = $dataArray['customkeys'];
-
-				if ( isset($data['customkeyslist']) && !empty($dataArray['customkeyslist']) )
-					$inputArray['customkeyslist'] = $dataArray['customkeyslist'];
-
-				if ( isset($data['paracount']) && !empty($dataArray['paracount']) )
-					$inputArray['paracount'] = $dataArray['paracount'] > 0 ? $dataArray['paracount'] : 0;
+			if( $this->action == 'superSun' ) {
+				
+				//
 
 			} else {
 
-				$inputArray['article'] = $dataArray['article'];
+				if ( isset($dataArray['superspun']) && !empty($dataArray['superspun']) )
+					$inputArray['superspun'] = $dataArray['superspun'] > 1 ? $dataArray['superspun'] : 1;
 
-				if ( isset($data['keywords']) && !empty($dataArray['keywords']) )
-					$inputArray['keywords'] = $dataArray['keywords'];
+				$inputArray['spin'] = !empty($dataArray['spin']) ? $dataArray['spin'] : 0;
+				$inputArray['phrasesonly'] = !empty($dataArray['phrasesonly']) ? $dataArray['phrasesonly'] : 0;
+				$inputArray['generatenow'] = !empty($dataArray['generatenow']) ? $dataArray['generatenow'] : 0;
 
-				if ( isset($data['volume']) && !empty($dataArray['volume']) )
-					$inputArray['volume'] = $dataArray['volume'] > 1 ? $dataArray['volume'] : 1;
+				if ( $this->action == 'buildArticle' ) {
 
-				if ( isset($data['style']) && !empty($dataArray['style']) )
-					$inputArray['style'] = $dataArray['style'] > 1 ? $dataArray['style'] : 1;
+					if ( isset($dataArray['subtopics']) || !empty($dataArray['subtopics']) )
+						$inputArray['subtopics'] = $dataArray['subtopics'];
 
-				if ( isset($data['sidebarBackgroundColor']) && !empty($dataArray['sidebarBackgroundColor']) )
-					$inputArray['sidebarBackgroundColor'] = $dataArray['sidebarBackgroundColor'];
+					$inputArray['wordcount'] = !empty($dataArray['wordcount']) ? $dataArray['wordcount'] : 500;
 
-				if ( isset($data['sidebarCaption']) && !empty($dataArray['sidebarCaption']) )
-					$inputArray['sidebarCaption'] = $dataArray['sidebarCaption'];
+					if ( isset($data['lsireplacement']) && !empty($dataArray['lsireplacement']) )
+						$inputArray['lsireplacement'] = $dataArray['lsireplacement'] > 0 ? $dataArray['lsireplacement'] : 1;
 
-				if ( isset($data['sidebarCaptionColor']) && !empty($dataArray['sidebarCaptionColor']) )
-					$inputArray['sidebarCaptionColor'] = $dataArray['sidebarCaptionColor'];
+					if ( isset($data['spintogether']) && !empty($dataArray['spintogether']) ) {
+						$inputArray['spintogether'] = $dataArray['spintogether'] > 0 ? $dataArray['spintogether'] : 1;
+						$inputArray['count'] = !empty($dataArray['count']) ? $dataArray['count'] : 1;
+					}
 
-				if ( isset($data['sidebarTipColor']) && !empty($dataArray['sidebarTipColor']) )
-					$inputArray['sidebarTipColor'] = $dataArray['sidebarTipColor'];
+					if ( isset($data['customkeys']) && !empty($dataArray['customkeys']) )
+						$inputArray['customkeys'] = $dataArray['customkeys'];
 
-				if ( isset($data['sidebarBackgroundColor']) && !empty($dataArray['sidebarBackgroundColor']) )
-					$inputArray['sidebarBackgroundColor'] = $dataArray['sidebarBackgroundColor'];
+					if ( isset($data['customkeyslist']) && !empty($dataArray['customkeyslist']) )
+						$inputArray['customkeyslist'] = $dataArray['customkeyslist'];
+
+					if ( isset($data['paracount']) && !empty($dataArray['paracount']) )
+						$inputArray['paracount'] = $dataArray['paracount'] > 0 ? $dataArray['paracount'] : 0;
+
+				} elseif ( $this->action == 'injectContent' ) {
+
+					$inputArray['article'] = $dataArray['article'];
+
+					if ( isset($data['keywords']) && !empty($dataArray['keywords']) )
+						$inputArray['keywords'] = $dataArray['keywords'];
+
+					if ( isset($data['volume']) && !empty($dataArray['volume']) )
+						$inputArray['volume'] = $dataArray['volume'] > 1 ? $dataArray['volume'] : 1;
+
+					if ( isset($data['style']) && !empty($dataArray['style']) )
+						$inputArray['style'] = $dataArray['style'] > 1 ? $dataArray['style'] : 1;
+
+					if ( isset($data['sidebarBackgroundColor']) && !empty($dataArray['sidebarBackgroundColor']) )
+						$inputArray['sidebarBackgroundColor'] = $dataArray['sidebarBackgroundColor'];
+
+					if ( isset($data['sidebarCaption']) && !empty($dataArray['sidebarCaption']) )
+						$inputArray['sidebarCaption'] = $dataArray['sidebarCaption'];
+
+					if ( isset($data['sidebarCaptionColor']) && !empty($dataArray['sidebarCaptionColor']) )
+						$inputArray['sidebarCaptionColor'] = $dataArray['sidebarCaptionColor'];
+
+					if ( isset($data['sidebarTipColor']) && !empty($dataArray['sidebarTipColor']) )
+						$inputArray['sidebarTipColor'] = $dataArray['sidebarTipColor'];
+
+					if ( isset($data['sidebarBackgroundColor']) && !empty($dataArray['sidebarBackgroundColor']) )
+						$inputArray['sidebarBackgroundColor'] = $dataArray['sidebarBackgroundColor'];
+				
+				}  elseif ( $this->action == 'getTip' ) {
+
+					if ( isset($data['keywords']) && !empty($dataArray['keywords']) )
+						$inputArray['keywords'] = $dataArray['keywords'];
+				}
 			}
 
 			# Request Api for Building Article
@@ -142,7 +154,7 @@ class ArticleBuilderService
 			return $authOutput;
 	}	
 
-	# Athenticate User 
+	# Action : Athenticate User 
 	public function authenticate()
 	{	
 		# Action to Login
@@ -160,4 +172,5 @@ class ArticleBuilderService
 
 		return $authOutput;
 	}
+
 }

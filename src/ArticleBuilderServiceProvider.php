@@ -12,9 +12,7 @@ class ArticleBuilderServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // echo "<pre>";
-        // print_r("here");
-        // echo "</pre>";
+        //
     }
 
     /**
