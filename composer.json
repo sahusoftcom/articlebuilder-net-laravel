@@ -1,5 +1,9 @@
 {
     "name": "sahusoftcom/articlebuilder-net-laravel",
+    "description": "Service Provider for ArticleBuilder.net APIs",
+    "keywords": ["article", "builder", "dotNet", "laravel"],
+    "homepage": "https://github.com/sahusoftcom/articlebuilder-net-laravel",
+    "license": "Sahu Soft India Private Limited",
     "authors": [
         {
             "name": "faizahmedfarooqui",
