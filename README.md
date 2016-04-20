@@ -1,4 +1,4 @@
-# articlebuilder-net-laravel
-Service Provider for ArticleBuilder.net APIs
-
-## Coming Soon
+# Articlebuilder.Net Laravel
+=============================
+> Service Provider for ArticleBuilder.net APIs
+-----------------------------------------------
