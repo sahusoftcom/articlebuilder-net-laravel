@@ -5,12 +5,10 @@ class ArticleBuilderService
 {
 	public function __construct($username, $password)
 	{
-		
-		$this->username 	= 	$username;
-		$this->password 	= 	$password;
-		$this->format 		= 	'json';
-		$this->url 			= 	'http://articlebuilder.net/api.php';
-
+		$this->username = $username;
+		$this->password = $password;
+		$this->format = 'json';
+		$this->url = 'http://articlebuilder.net/api.php';
 	}
 
 	public function curlPost($url, $data, &$info) 
@@ -26,7 +24,6 @@ class ArticleBuilderService
 	    curl_close($ch);
 
 	    return $html;
-
 	}
 
 	public function curlPostData($data) 
@@ -37,7 +34,6 @@ class ArticleBuilderService
 	    }
 
 	    return $fdata;
-
 	}
 
 	public function buildArticle($username, $password, $dataArray)
