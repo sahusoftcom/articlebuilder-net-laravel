@@ -174,6 +174,7 @@ class ArticleBuilderService
 		return $authOutput;
 	}
 
+	# Action : apiQueries & apiMaxQueries
 	public function apiQueries()
 	{
 		# Authenticate & get Session ID
@@ -209,6 +210,7 @@ class ArticleBuilderService
 		}
 	}
 
+	# Action : apiTipQueries & apiMaxTipQueries
 	public function apiTipQueries()
 	{
 		# Authenticate & get Session ID
@@ -217,7 +219,8 @@ class ArticleBuilderService
 
 			# Building Input Array.
 			$inputArray = [];
-			$inputArray['action'] = 'apiTipQueries';
+			$this->action = 'apiTipQueries';
+			$inputArray['action'] = $this->action;
 			$inputArray['session'] = $authOutput['session'];
 			$inputArray['format'] = $this->format;
 
@@ -232,7 +235,8 @@ class ArticleBuilderService
 			$output['success'] = true;
 
 			#build Input Array
-			$inputArray['action'] = 'apiMaxTipQueries';
+			$this->action = 'apiMaxTipQueries';
+			$inputArray['action'] = $this->action;
 
 			# Max Count of Api Tip Queries
 			$buildOutput = $this->curlPost($this->url, $inputArray, $info);
@@ -242,6 +246,70 @@ class ArticleBuilderService
 
 			return $output;
 		}
+	}
+
+	# Action : categories
+	public function categories()
+	{
+		# Authenticate & get Session ID
+		$authOutput = $this->authenticate();
+		if ( $authOutput['success'] ) {
+
+			# Building Input Array.
+			$inputArray = [];
+			$this->action = 'categories';
+			$inputArray['action'] = $this->action;
+			$inputArray['session'] = $authOutput['session'];
+			$inputArray['format'] = $this->format;
+
+			# Use Count of Api Tip Queries
+			$buildOutput = $this->curlPost($this->url, $inputArray, $info);
+			$buildOutput = json_decode($buildOutput, true);	
+			$buildOutput['session'] = $inputArray['session'];
+
+			return $buildOutput;
+		}
+	}
+
+	# Action : blogAdd & blogDelete
+	public function addDeleteBlog($dataArray)
+	{
+		# Check cases for blogAdd Action
+		if( $dataArray['action'] == 'blogAdd' ) {
+			if ( empty($dataArray['url']) || !isset($dataArray['url']) ) {
+				return ['success' => false, 'error' => 'URL is required to Add Blog'];
+			} elseif ( empty($dataArray['username']) || !isset($dataArray['username']) ) {
+				return ['success' => false, 'error' => 'Username is required to Add Blog'];
+			} elseif ( empty($dataArray['password']) || !isset($dataArray['password']) ) {
+				return ['success' => false, 'error' => 'Password is required to Add Blog'];
+			}
+		}
+
+		# Authenticate & get Session ID
+		$authOutput = $this->authenticate();
+		if ( $authOutput['success'] ) {
+
+			# Building Input Array.
+			$inputArray = [];
+			$this->action = $dataArray['action'];
+			$inputArray['action'] = $this->action;
+			$inputArray['session'] = $authOutput['session'];
+			$inputArray['format'] = $this->format;
+			$inputArray['description'] = $dataArray['description'];
+
+			if ( $this->action == 'blogAdd' ) {
+				$inputArray['url'] = $dataArray['url'];
+				$inputArray['username'] = $dataArray['username'];
+				$inputArray['password'] = $dataArray['password'];
+			}
+
+			# Use Count of Api Tip Queries
+			$buildOutput = $this->curlPost($this->url, $inputArray, $info);
+			$buildOutput = json_decode($buildOutput, true);	
+			$buildOutput['session'] = $inputArray['session'];
+
+			return $buildOutput;
+		}	
 	}
 
 }
