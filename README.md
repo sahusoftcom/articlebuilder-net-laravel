@@ -62,9 +62,9 @@ class NewService
 	
 	`require`:	function does not require any parameter.
 	
-	`Returns`: 
+	Returns: 
 
-		`Variable`   	`Value`
+		[Variable]   	[Value]
 			success		true
 			session		(a unique session id)
 
@@ -108,8 +108,8 @@ class NewService
 | 				 | number of pargraphs										  |
 IMPORTANT NOTE: If you choose to spin multiple articles together, it costs one quota point for each article generated. That is, if you set 'spintogether' as 1 and set a 'count' of 5, it will cost you 5 daily quota points.
 
-	`Returns`:
-		`Variable`   	`Value`
+	Returns:
+		[Variable]   	[Value]
 			output 		(article)
 			success		true
 			session		(a unique session id)
