@@ -78,7 +78,7 @@ class NewService
 
 	`require`:	dataArray having folllowing keys and values
 
-	  [Key] 	   		    [Value]        											   
+  ```[Key] 	   		    [Value]        											   
 	  action    	    buildArticle										   	       
 	  subtopics    	    OPTIONAL (the subtopics to include in)					   
 	  category	 	    (the category to build an article in) 					   
@@ -102,7 +102,7 @@ class NewService
 	  generatenow	    OPTIONAL (0 = No [default], 1= Yes -- return a 
 	  					randomly spun version of content) 							       
 	  paracount  	    OPTIONAL (0 = Don't try to keep paragraph counts the 
-	  					same [default], 1 = Make sure all articles have the same number of pargraphs										   
+	  					same [default], 1 = Make sure all articles have the same number of pargraphs	```									   
 IMPORTANT NOTE: If you choose to spin multiple articles together, it costs one quota point for each article generated. That is, if you set 'spintogether' as 1 and set a 'count' of 5, it will cost you 5 daily quota points.
 
 	Returns:
