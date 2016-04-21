@@ -78,6 +78,8 @@ class NewService
 
 	`require`:	dataArray having folllowing keys and values
 
+	Table:
+
   [Key] 	   		[Value]	   
   action    	    buildArticle
   subtopics    	    OPTIONAL (the subtopics to include in)					   
