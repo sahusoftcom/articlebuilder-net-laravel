@@ -127,3 +127,213 @@ IMPORTANT NOTE: If you choose to spin multiple articles together, it costs one q
 	phrasesonly				OPTIONAL(0 = No [default], 1 = Yes -- only spin phrases in the article with TBS)
 	generatenow 			OPTIONAL(0 = No [default], 1 = Yes -- return a randomly spun version of content)
 ```
+
+3.	`superSpun` :
+
+	Generates an article from a randomly selected super-spun document in the specified category.
+
+	`function`: article($dataArray)
+
+	`require`:	dataArray having folllowing keys and values
+```
+	[Key]				[Value]
+	action				superSpun
+	category			(the category to generate an article for)
+```
+
+4. `getTip` :
+	
+	Returns one tip from the given category. Very useful as blog post comments or other shorter backlink texts.
+
+	`function`: article($dataArray)
+
+	`require`: dataArray having following keys and values
+```
+	[Key]				[Value]
+	action				getTip
+	category			(the category to generate an article for)
+	keywords			(attempt to return a tip containing the provided keywords)
+	superspun			(1 to use Super Spun Content, 2 for Expanded Super Spun, 0 for all content)
+	spin				OPTIONAL (0 = No [default], 1 = Yes -- spin content using The Best Spinner API)
+	phrasesonly			OPTIONAL(0 = No [default], 1 = Yes -- only spin phrases in the article with TBS)
+	generatenow			OPTIONAL(0 = No [default], 1 = Yes -- return a randomly spun version of content)
+```
+
+5. `blogAdd` :
+
+	Adds a new configured blog to the user's account. If a blog matching the description already exists, its details are updated.
+
+	`function`: addDeleteBlog($dataArray)
+
+	`require`: dataArray having following keys and values
+```
+	[Key]				[Value]
+	action				blogAdd
+	description			(a unique description for the blog)
+	url					(the blog URL)
+	username			(the blog username)
+	password			(the blog password)
+```
+
+6. `blogDelete` :
+
+	Deletes a blog (and all associated auto-posting jobs for the blog) from the user's account.
+
+	`function`: addDeleteBlog($dataArray)
+
+	`require`: dataArray having following keys and values
+```
+	[Key]			[Value]
+	action			blogDelete
+	description		(the description of the blog to delete)
+```
+
+7. `createBlogPostJob` :
+
+	Create's an auto-posting job for the passed blog in the user's account. The job ID is returned in the output parameter, and is required for deleting the job or creating auto-posts on demand (using the doAutoPost API call).
+
+	`function`: blogPostJob($dataArray)
+
+	`require`: dataArray having following keys and values
+```
+	[Key]			[Value]
+	action 			createBlogPostJob
+	blog			(the description of the blog to create the job for)
+	category		(the category to post an article from -- multiple categories can be used by separating the categories with a pipe character (|). If multiple categories are provided, one will be randomly selected to post from each time the job gets called)
+	blogcategory	(the blog category to put the post in--use the full category name)
+	wordcountmin	(the minimum number of words the posted article should have: 300 is the absolute minimum, 1000 is the absolute maximum)
+	wordcountmax	(the maximum number of words the posted article should have: 300 is the absolute minimum, 1000 is the absolute maximum)
+	frequency		(an integer value representing the number of seconds in between posts -- minimum is 28800, or about three posts per day. Note that the posting time will not be exact, as it is adjusted automatically to cause posts to be more random in appearance)
+	genericresource	OPTIONAL (0 = no generic resource box [default], 1 = use generic resource box)
+	genericlinks	OPTIONAL (required if genericresource is 1 -- see auto-posting details page for full description of this option)
+	lsireplacement	OPTIONAL (0 = no LSI replacement [default], 1 = use LSI replacement in supported categories)
+	addheadings		OPTIONAL (0 = don't add headings to the post [default], 1 = add headings to the post)
+	addimages		OPTIONAL (0 = don't add an image to the post [default], 1 = add an image to the post)
+	addyoutube		OPTIONAL (0 = don't add a youtube video to the post [default], 1 = add an youtube video to the post)
+	addinjection	OPTIONAL (0 = don't inject additional content into the post [default], 1 = inject additional content)
+	addclickbank	OPTIONAL (0 = don't add Clickbank ad links to the post [default], 1 = add Clickbank ad links to the post)
+	cbusername		OPTIONAL (required if addclickbank = 1 -- ClickBank username to use in CB ad links)
+	customkeys		OPTIONAL (0 = don't perform custom keyword replacement [default], 1 = perform custom keyword replacement)
+	customkeyslist	OPTIONAL (required if customkeys = 1 -- data for custom keyword replacement -- see auto-posting details page for full description of this option)
+	injectstyle		OPTIONAL (1 = inside the content, 2 = as sidebar "tips" [default], 3 = both inside and sidebar, 4 = as in-line "callouts", 5 = both inside and callouts)
+	injectsidebar	OPTIONAL (description of user-saved sidebar configuration to format injected content with)
+	injectqty		OPTIONAL (1 = A lot, 2 = Quite a bit, 3 = A little [default])
+	resource		OPTIONAL (resource box, nested spinning supported)
+	comments		OPTIONAL (0 = don't allow comments on the post [default], 1 = allow comments on the post)
+	pingbacks		OPTIONAL (0 = don't allow pingbacks on the post [default], 1 = allow pingbacks on the post)
+	draft			OPTIONAL (0 = immediately publish the post [default], 1 = post as a draft)
+```
+
+8. `deleteBlogPostJob` :
+
+	Deletes an auto-posting job from the user's account.
+
+	`function`: blogPostJob($dataArray)
+
+	`require`: dataArray having following keys and values
+```
+	[Key]			[Value]
+	action			deleteBlogPostJob
+	id				(the blog posting job id)
+```
+
+9. `doAutoPost` :
+
+	Runs the specified auto-posting job on demand, which will post content to the configured blog. The posted url returned by XMLRPC is returned in the output variable if successful.
+
+	`function`: blogPostJob($dataArray)
+
+	`require`: dataArray having following keys and values
+```
+	[Key]			[Value]
+	action			doAutoPost
+	id				(the blog posting job id to run)
+```
+
+10. `createUniquePostJob`
+
+	Create's a unique content auto-posting job for the passed blog in the user's account. The job ID is returned in the output parameter, and is required for deleting the job or creating auto-posts on demand (using the doUniqueAutoPost API call).
+
+	`function`: unqiuePostJob($dataArray)
+
+	`require`: dataArray having following keys and values
+
+```
+	[Key]			[Value]
+	action			createUniquePostJob
+	blog			(the description of the blog to create the job for)
+	apikey			(your iNeedArticles.com API key)
+	keywords		(the keywords to order articles for -- multiple keywords can be used by separating the keywords with a newline character. If multiple keywords are provided, one will be randomly selected to post from each time the job gets called)
+	exactkeys		(0 = Do not require exact keywords in ordered articles [Default], 1 = Require exact keywords in ordered articles)
+	bestwriters		(0 = Any iNeedArticles writer is allowed [default], 1 = only 4 or 5 star writers allowed (more expensive))
+	extraresearch	(0 = No extra research fee [default], 1 = Add extra research fee (more in-depth articles, but more expensive))
+	blogcategory	(the blog category to put the post in--use the full category name)
+	wordcountmin	(the minimum number of words the posted article should have: 100 is the absolute minimum, 1000 is the absolute maximum)
+	wordcountmax	(the maximum number of words the posted article should have: 100 is the absolute minimum, 1000 is the absolute maximum)
+	frequency		(an integer value representing the number of seconds in between posts -- minimum is 28800, or about three posts per day. Note that the posting time will not be exact, as it is adjusted automatically to cause posts to be more random in appearance)
+	genericresource	OPTIONAL (0 = no generic resource box [default], 1 = use generic resource box)
+	genericlinks	OPTIONAL (required if genericresource is 1 -- see auto-posting details page for full description of this option)
+	addimages		OPTIONAL (0 = don't add an image to the post [default], 1 = add an image to the post)
+	addyoutube		OPTIONAL (0 = don't add a youtube video to the post [default], 1 = add an youtube video to the post)
+	resource		OPTIONAL (resource box, nested spinning supported)
+	comments		OPTIONAL (0 = don't allow comments on the post [default], 1 = allow comments on the post)
+	pingbacks		OPTIONAL (0 = don't allow pingbacks on the post [default], 1 = allow pingbacks on the post)
+	draft			OPTIONAL (0 = immediately publish the post [default], 1 = post as a draft)
+```
+
+10. `deleteUniquePostJob`
+
+	Deletes a unique content auto-posting job from the user's account.
+
+	`function`: unqiuePostJob($dataArray)
+
+	`require`: dataArray having following keys and values
+
+```
+	[Key]			[Value]
+	action			deleteUniquePostJob
+	id				(the unique content posting job id)
+```
+
+11. `doUniqueAutoPost`
+
+	Runs the specified unique content auto-posting job on demand, which will post content to the configured blog. The posted url returned by XMLRPC is returned in the output variable if successful. Keep in mind that there have to be completed articles available from iNeedArticles.com or the call will fail.
+
+	`function`: unqiuePostJob($dataArray)
+
+	`require`: dataArray having following keys and values
+
+```
+	[Key]			[Value]
+	action			doUniqueAutoPost
+	id				(the unique content posting job id to run)
+```
+
+12. `categories`
+
+	`function`: categories()
+
+	Returns:
+		[Key]		[Value]
+		success		true
+		output		(the category list--PHP array or XML table)
+
+13. `apiQueries`
+
+	`function`:	apiQueries()
+
+	Returns:
+		[Key]			[Value]
+		success			true
+		apiQueries		(the number of queries that have been performed today)
+		maxApiQueries	(the number of queries that the authenticated user can make to the API per day)
+
+14. `apiTipQueries`
+
+	`function`: apiTipQueries()
+
+	Returns:
+		[Key]				[Value]
+		success				true
+		apiTipQueries		(the number of getTip queries that have been performed today)
+		maxApiTipQueries	(the number of getTip queries that the authenticated user can make to the API per day)
