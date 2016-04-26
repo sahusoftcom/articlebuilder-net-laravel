@@ -310,28 +310,31 @@ class NewService
 12. `categories`
 
 	`function`: categories()
-
+	```
 	Returns:
 		[Key]		[Value]
 		success		true
 		output		(the category list--PHP array or XML table)
+	```
 
 13. `apiQueries`
 
 	`function`:	apiQueries()
-
+	```
 	Returns:
 		[Key]			[Value]
 		success			true
 		apiQueries		(the number of queries that have been performed today)
 		maxApiQueries	(the number of queries that the authenticated user can make to the API per day)
+	```
 
 14. `apiTipQueries`
 
 	`function`: apiTipQueries()
-
+	```
 	Returns:
 		[Key]				[Value]
 		success				true
 		apiTipQueries		(the number of getTip queries that have been performed today)
 		maxApiTipQueries	(the number of getTip queries that the authenticated user can make to the API per day)
+	```
