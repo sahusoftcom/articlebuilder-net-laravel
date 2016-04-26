@@ -102,3 +102,28 @@ IMPORTANT NOTE: If you choose to spin multiple articles together, it costs one q
 			output 		(article)
 			success		true
 			session		(a unique session id)
+
+3.	`injectContent` :
+
+	Inject Content function authenticates user and performs the content injection.
+
+	`function`: article($dataArray)
+
+	`require`:	dataArray having folllowing keys and values
+```
+	[Key]					[Value]
+	action					injectArticle
+	article 				(the article to inject content into)
+	category				(the category to build an article in)
+	keywords 				OPTIONAL (to get tips containing specific keywords)
+	volume					(amount of content to add: 1 = A Lot, 2 = Quit A Bit, 3 = A Little)
+	style 					(1 = Inside The Content, 2 = As Sidebar "Tips", 3 = Inside and Sidebar, 4 = In-Line Callout, 5 = Inside and Callout)
+	superspun				(1 to use Super Spun content, 2 to use Expanded Super Spun content, 0 to use unspun content -- not yet available for all categories)
+	sidebarBackgroundColor	OPTIONAL (the HTML background color of the tips sidebar; default is "FFFFCC")
+	sidebarCaption 			OPTIONAL (the caption to use in the sidebar; default is "TIP!")
+	sidebarCaptionColor		OPTIONAL (the foreground color of the caption; default is "red")
+	sidebarTipColor 		OPTIONAL (the foreground color of the tip text; default is "black")
+	spin 					OPTIONAL (0 = No [default], 1 = Yes -- spin content using The Best Spinner API)
+	phrasesonly				OPTIONAL(0 = No [default], 1 = Yes -- only spin phrases in the article with TBS)
+	generatenow 			OPTIONAL(0 = No [default], 1 = Yes -- return a randomly spun version of content)
+```
