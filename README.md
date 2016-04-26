@@ -96,12 +96,13 @@ class NewService
 	```
 
 	IMPORTANT NOTE: *If you choose to spin multiple articles together, it costs one quota point for each article generated. That is, if you set 'spintogether' as 1 and set a 'count' of 5, it will cost you 5 daily quota points.*
-
+	```
 	Returns:
 		[Variable]   	[Value]
 			output 		(article)
 			success		true
 			session		(a unique session id)
+	```
 
 3.	`injectContent` :
 
