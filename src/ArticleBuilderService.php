@@ -482,13 +482,13 @@ class ArticleBuilderService
 				$inputArray['apikey'] = $dataArray['apikey'];
 				$inputArray['keywords'] = $dataArray['keywords'];
 
-				if ( isset($inputArray['exactkeys']) $$ !empty($inputArray['exactkeys']) )
+				if ( isset($inputArray['exactkeys']) && !empty($inputArray['exactkeys']) )
 					$inputArray['exactkeys'] = $dataArray['exactkeys'] > 0 ? 1 : 0;
 
-				if ( isset($inputArray['bestwriters']) $$ !empty($inputArray['bestwriters']) )
+				if ( isset($inputArray['bestwriters']) && !empty($inputArray['bestwriters']) )
 					$inputArray['bestwriters'] = $dataArray['bestwriters'] > 0 ? 1 : 0;
 
-				if ( isset($inputArray['extrasearch']) $$ !empty($inputArray['extrasearch']) )
+				if ( isset($inputArray['extrasearch']) && !empty($inputArray['extrasearch']) )
 					$inputArray['extrasearch'] = $dataArray['extrasearch'] > 0 ? 1 : 0;
 
 				$inputArray['blogcategory'] = $dataArray['blogcategory'];
