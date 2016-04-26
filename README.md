@@ -60,7 +60,7 @@ class NewService
 
 	`function`: authenticate()
 	
-	`require`:	function does not require any parameter.
+	`require`:	*function does not require any parameter.*
 	
 	Returns: 
 
@@ -68,15 +68,15 @@ class NewService
 			success		true
 			session		(a unique session id)
 
-	Session ID is not required to be saved or to be passed in every call.
+	*Session ID is not required to be saved or to be passed in every call.*
 
 2.	`buildArticle` :
 
-	Build Article function authenticates user and fetches desired article.
+	*Build Article function authenticates user and fetches desired article.*
 
 	`function`: article($dataArray)
 
-	`require`:	dataArray having folllowing keys and values
+	`require`:	*dataArray having folllowing keys and values*
 	```
 		[Key]			[Value]
 		action			buildArticle
@@ -95,7 +95,7 @@ class NewService
 		paracount		OPTIONAL (0 = Don't try to keep paragraph counts the same [default], 1 = Make sure all articles have the same number of pargraphs
 	```
 
-	IMPORTANT NOTE: If you choose to spin multiple articles together, it costs one quota point for each article generated. That is, if you set 'spintogether' as 1 and set a 'count' of 5, it will cost you 5 daily quota points.
+	IMPORTANT NOTE: *If you choose to spin multiple articles together, it costs one quota point for each article generated. That is, if you set 'spintogether' as 1 and set a 'count' of 5, it will cost you 5 daily quota points.*
 
 	Returns:
 		[Variable]   	[Value]
@@ -105,11 +105,11 @@ class NewService
 
 3.	`injectContent` :
 
-	Inject Content function authenticates user and performs the content injection.
+	*Inject Content function authenticates user and performs the content injection.*
 
 	`function`: article($dataArray)
 
-	`require`:	dataArray having folllowing keys and values
+	`require`:	*dataArray having folllowing keys and values*
 	```
 		[Key]					[Value]
 		action					injectArticle
@@ -130,11 +130,11 @@ class NewService
 
 3.	`superSpun` :
 
-	Generates an article from a randomly selected super-spun document in the specified category.
+	*Generates an article from a randomly selected super-spun document in the specified category.*
 
 	`function`: article($dataArray)
 
-	`require`:	dataArray having folllowing keys and values
+	`require`:	*dataArray having folllowing keys and values*
 	```
 		[Key]				[Value]
 		action				superSpun
@@ -143,11 +143,11 @@ class NewService
 
 4. `getTip` :
 	
-	Returns one tip from the given category. Very useful as blog post comments or other shorter backlink texts.
+	*Returns one tip from the given category. Very useful as blog post comments or other shorter backlink texts.*
 
 	`function`: article($dataArray)
 
-	`require`: dataArray having following keys and values
+	`require`: *dataArray having following keys and values*
 	```
 		[Key]				[Value]
 		action				getTip
@@ -161,11 +161,11 @@ class NewService
 
 5. `blogAdd` :
 
-	Adds a new configured blog to the user's account. If a blog matching the description already exists, its details are updated.
+	*Adds a new configured blog to the user's account. If a blog matching the description already exists, its details are updated.*
 
 	`function`: addDeleteBlog($dataArray)
 
-	`require`: dataArray having following keys and values
+	`require`: *dataArray having following keys and values*
 	```
 		[Key]				[Value]
 		action				blogAdd
@@ -177,11 +177,11 @@ class NewService
 
 6. `blogDelete` :
 
-	Deletes a blog (and all associated auto-posting jobs for the blog) from the user's account.
+	*Deletes a blog (and all associated auto-posting jobs for the blog) from the user's account.*
 
 	`function`: addDeleteBlog($dataArray)
 
-	`require`: dataArray having following keys and values
+	`require`: *dataArray having following keys and values*
 	```
 		[Key]			[Value]
 		action			blogDelete
@@ -190,11 +190,11 @@ class NewService
 
 7. `createBlogPostJob` :
 
-	Create's an auto-posting job for the passed blog in the user's account. The job ID is returned in the output parameter, and is required for deleting the job or creating auto-posts on demand (using the doAutoPost API call).
+	*Create's an auto-posting job for the passed blog in the user's account. The job ID is returned in the output parameter, and is required for deleting the job or creating auto-posts on demand (using the doAutoPost API call).*
 
 	`function`: blogPostJob($dataArray)
 
-	`require`: dataArray having following keys and values
+	`require`: *dataArray having following keys and values*
 	```
 		[Key]			[Value]
 		action 			createBlogPostJob
@@ -226,11 +226,11 @@ class NewService
 
 8. `deleteBlogPostJob` :
 
-	Deletes an auto-posting job from the user's account.
+	*Deletes an auto-posting job from the user's account.*
 
 	`function`: blogPostJob($dataArray)
 
-	`require`: dataArray having following keys and values
+	`require`: *dataArray having following keys and values*
 	```
 		[Key]			[Value]
 		action			deleteBlogPostJob
@@ -239,11 +239,11 @@ class NewService
 
 9. `doAutoPost` :
 
-	Runs the specified auto-posting job on demand, which will post content to the configured blog. The posted url returned by XMLRPC is returned in the output variable if successful.
+	*Runs the specified auto-posting job on demand, which will post content to the configured blog. The posted url returned by XMLRPC is returned in the output variable if successful.*
 
 	`function`: blogPostJob($dataArray)
 
-	`require`: dataArray having following keys and values
+	`require`: *dataArray having following keys and values*
 	```
 		[Key]			[Value]
 		action			doAutoPost
@@ -252,11 +252,11 @@ class NewService
 
 10. `createUniquePostJob`
 
-	Create's a unique content auto-posting job for the passed blog in the user's account. The job ID is returned in the output parameter, and is required for deleting the job or creating auto-posts on demand (using the doUniqueAutoPost API call).
+	*Create's a unique content auto-posting job for the passed blog in the user's account. The job ID is returned in the output parameter, and is required for deleting the job or creating auto-posts on demand (using the doUniqueAutoPost API call).*
 
 	`function`: unqiuePostJob($dataArray)
 
-	`require`: dataArray having following keys and values
+	`require`: *dataArray having following keys and values*
 
 	```
 		[Key]			[Value]
@@ -283,11 +283,11 @@ class NewService
 
 10. `deleteUniquePostJob`
 
-	Deletes a unique content auto-posting job from the user's account.
+	*Deletes a unique content auto-posting job from the user's account.*
 
 	`function`: unqiuePostJob($dataArray)
 
-	`require`: dataArray having following keys and values
+	`require`: *dataArray having following keys and values*
 	```
 		[Key]			[Value]
 		action			deleteUniquePostJob
@@ -296,11 +296,11 @@ class NewService
 
 11. `doUniqueAutoPost`
 
-	Runs the specified unique content auto-posting job on demand, which will post content to the configured blog. The posted url returned by XMLRPC is returned in the output variable if successful. Keep in mind that there have to be completed articles available from iNeedArticles.com or the call will fail.
+	*Runs the specified unique content auto-posting job on demand, which will post content to the configured blog. The posted url returned by XMLRPC is returned in the output variable if successful. Keep in mind that there have to be completed articles available from iNeedArticles.com or the call will fail.*
 
 	`function`: unqiuePostJob($dataArray)
 
-	`require`: dataArray having following keys and values
+	`require`: *dataArray having following keys and values*
 	```
 		[Key]			[Value]
 		action			doUniqueAutoPost
