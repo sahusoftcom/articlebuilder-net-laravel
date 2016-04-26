@@ -77,7 +77,7 @@ class NewService
 	`function`: article($dataArray)
 
 	`require`:	dataArray having folllowing keys and values
-
+```
 	[Key]			[Value]
 	action			buildArticle
 	subtopics		OPTIONAL (the subtopics to include in)
@@ -92,7 +92,8 @@ class NewService
 	spin 			OPTIONAL (0 = No[default], 1 = Yes -- spin content using) the BestSpinner API
 	phrasesonly		OPTIONAL (0 = No[default], 1 = Yes -- only spin phrases in the article with TBS the BestSpinner API
 	generatenow		OPTIONAL (0 = No [default], 1= Yes -- return a randomly spun version of content)
-	paracount		OPTIONAL (0 = Don't try to keep paragraph counts the same [default], 1 = Make sure all articles have the same number of pargraphs		
+	paracount		OPTIONAL (0 = Don't try to keep paragraph counts the same [default], 1 = Make sure all articles have the same number of pargraphs
+```
 
 IMPORTANT NOTE: If you choose to spin multiple articles together, it costs one quota point for each article generated. That is, if you set 'spintogether' as 1 and set a 'count' of 5, it will cost you 5 daily quota points.
 
