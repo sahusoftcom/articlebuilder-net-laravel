@@ -43,7 +43,7 @@ class ArticleBuilderService
 	# Action : Inject Article or Build Article
 	public function article($dataArray)
 	{
-		if ( $dataArray['action'] != 'superSpun' || $dataArray['action'] != 'buildArticle' || $dataArray['action'] != 'injectContent'  || $dataArray['action'] != 'getTip' ) {
+		if ( !($dataArray['action'] != 'superSpun' || $dataArray['action'] != 'buildArticle' || $dataArray['action'] != 'injectContent'  || $dataArray['action'] != 'getTip') ) {
 			return ['success' => false, 'error' => 'Action Not Found!'];
 		}
 
