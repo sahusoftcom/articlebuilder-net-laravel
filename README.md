@@ -1,7 +1,7 @@
 Articlebuilder.Net Laravel Version: 1.0
 ==========================
 
-Service Provider of ArticleBuilder.net API for Laravel PHP Framework [Packagist]
+Service Provider of ArticleBuilder.net API for Laravel PHP Framework [ [Packagist] ]
 
 [Packagist]: <https://packagist.org/packages/sahusoftcom/articlebuilder-net-laravel>
 
