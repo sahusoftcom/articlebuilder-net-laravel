@@ -34,9 +34,9 @@ SahusoftCom\ArticleBuilder\ArticleBuilderProvider::class
 ## How to use
 
 1. You should use the `ArtileBuilderService` to access its function
-2. Pass `username` & `passsword` parameter in `ArticleBuilderService`
+2. Pass `username` & `passsword` parameter in `ArticleBuilderService` Class
 3. You should use the `XMLRPClientWordpress` to access its function
-4. Pass `xmlrpccurl`, `username` & `password` parameter in `XMLRPClientWordpress`
+4. Pass `xmlrpccurl`, `username` & `password` parameter in `XMLRPClientWordpress` Class
 
 For example:
 
