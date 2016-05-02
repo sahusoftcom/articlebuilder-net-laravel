@@ -86,7 +86,7 @@ class NewService
 	`function`: article($dataArray)
 
 	`require`:	*dataArray having folllowing keys and values*
-	```json
+	```
 	[Key]			[Value]
 	action			buildArticle
 	subtopics		OPTIONAL (the subtopics to include in)
