@@ -46,13 +46,15 @@ use SahusoftCom\ArticleBuilderService;
 use SahusoftCom\XMLRPClientWordpress;
 
 class NewService
-{
+{	
+	// Example to use ArticleBuilder Service
 	public function firstMethod()
 	{
 		$object = new ArticleBuilderService($username, $password);
 		$object->authenticate();
 	}
 	
+	// Example to use XMLRPClientWordpress Service
 	public function secondMethod()
 	{
 		$object = new XMLRPClientWordpress($xmlrpccurl, $username, $password);
