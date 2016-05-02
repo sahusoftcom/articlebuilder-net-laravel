@@ -1,7 +1,7 @@
 Articlebuilder.Net Laravel Version: 1.0
 ==========================
 
-Service Provider of ArticleBuilder.net API for Laravel PHP Framework [ [Packagist] ]
+Service Provider of ArticleBuilder.net API & XMLRPClient Wordpress for Laravel PHP Framework [ [Packagist] ]
 
 [Packagist]: <https://packagist.org/packages/sahusoftcom/articlebuilder-net-laravel>
 
@@ -43,20 +43,25 @@ For example:
 namespace App;
  
 use SahusoftCom\ArticleBuilderService;
+use SahusoftCom\XMLRPClientWordpress;
 
 class NewService
 {
-	public function start()
+	public function firstMethod()
 	{
 		$object = new ArticleBuilderService($username, $password);
 		$object->authenticate();
-		.
-		.
-		.
-		.
+	}
+	
+	public function secondMethod()
+	{
+		$object = new XMLRPClientWordpress($xmlrpccurl, $username, $password);
+		$blogId = $object->createPost($title, $body, $category, $keywords, $encoding);
+	}
+
 ```
 
-## Functions
+## Article Builder Service Functions
 
 1.	`authenticate`
 
@@ -341,3 +346,49 @@ class NewService
 		apiTipQueries		(the number of getTip queries that have been performed today)
 		maxApiTipQueries	(the number of getTip queries that the authenticated user can make to the API per day)
 	```
+
+## XMLRPClientWordpress Service Functions
+
+1.	`createPost`
+
+	`function`: createPost($title, $body, $category, $keywords, $encoding)
+	
+	`require`:	
+	
+	```
+	$title 		title of the article
+	$body 		body of the article
+	$category 	categories (array) of the article (optional) 
+	$keywords 	keyword of the article (optional)
+	$encoding 	by default its UTF-8 encoding (optional)
+
+	Returns:
+		blogid
+	```
+
+2.	`getPost`
+	
+	`function`: getPost($blogId)
+
+	`require`:
+
+	```
+	$blogId 	blog id of the specific blog
+
+	Returns:
+		blog details (containing permalink, etc.)
+
+	```
+
+3.	`displayAuthors`
+
+	`funtion`: displayAuthors($blogId)
+
+	`require`:
+	```
+	$blogId 	(optional) blog id
+
+	Returns:
+		blog authors detail
+	```
+
