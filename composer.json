@@ -1,7 +1,7 @@
 {
     "name": "sahusoftcom/articlebuilder-net-laravel",
-    "description": "Service Provider for ArticleBuilder.net APIs",
-    "keywords": ["article", "builder", "dotNet", "laravel"],
+    "description": "Service Provider for ArticleBuilder.net API & XMLRPClientWordpress Blog Posting",
+    "keywords": ["article", "builder", "dotNet", "laravel", "xmlrpc", "wordpress", "blog post"],
     "homepage": "https://github.com/sahusoftcom/articlebuilder-net-laravel",
     "license": "Sahu Soft India Private Limited",
     "authors": [
