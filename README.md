@@ -27,7 +27,7 @@ Add the following line to the `require` section of `composer.json`:
 
 In `/config/app.php`, add the following to `providers`:
   
-```
+```php
 SahusoftCom\ArticleBuilder\ArticleBuilderProvider::class
 ```
 
@@ -38,7 +38,7 @@ SahusoftCom\ArticleBuilder\ArticleBuilderProvider::class
 
 For example:
 
-```
+```php
 <?php
 namespace App;
  
